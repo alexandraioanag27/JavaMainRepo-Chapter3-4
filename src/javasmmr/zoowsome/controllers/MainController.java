@@ -256,7 +256,7 @@ public class MainController {
 //            System.out.println("The crocodile did not kill the caretaker.");
 //        }
 
-        // Chapter 5
+        // Zoo (part 3) - 5.7
 
         AnimalRepository animalRepo = new AnimalRepository();
 
@@ -282,6 +282,8 @@ public class MainController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Zoo(part 3) - 5.8
 
         EmployeesRepository employeeRepo = new EmployeesRepository();
 
