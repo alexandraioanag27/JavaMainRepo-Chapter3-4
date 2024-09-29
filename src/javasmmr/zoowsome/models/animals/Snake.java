@@ -1,8 +1,14 @@
 package javasmmr.zoowsome.models.animals;
 
+import javasmmr.zoowsome.services.factories.Constants;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
 
 public class Snake extends Reptile{
 
@@ -19,6 +25,12 @@ public class Snake extends Reptile{
         this.name = "Snake";
         this.laysEggs = true;
     };
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Reptile.Snake);
+    }
 
     @Override
     public double getPredisposition() {

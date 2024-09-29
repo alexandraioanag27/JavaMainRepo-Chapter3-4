@@ -1,5 +1,12 @@
 package javasmmr.zoowsome.models.animals;
 
+import org.w3c.dom.Element;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
+
 public abstract class Bird extends Animals{
     int numberOfLegs;
     String name;
@@ -9,6 +16,17 @@ public abstract class Bird extends Animals{
     public Bird(){
         super(0.1, 4);
     };
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, "migrates", String.valueOf(getMigrates()));
+        createNode(eventWriter, "avgFlightAltitude", String.valueOf(getAvgFlightAltitude()));
+    }
+
+    public void decodeFromXml(Element element) {
+        setMigrates(Boolean.valueOf(element.getElementsByTagName("migrates").item(0).getTextContent()));
+        setAvgFlightAltitude(Integer.valueOf(element.getElementsByTagName("avgFlightAltitude").item(0).getTextContent()));
+    }
 
     public int getNumberOfLegs() {
         return numberOfLegs;
@@ -28,7 +46,7 @@ public abstract class Bird extends Animals{
         this.name = name;
     }
 
-    public boolean isMigrates() {
+    public boolean getMigrates() {
         return migrates;
     }
 

@@ -2,6 +2,9 @@ package javasmmr.zoowsome.controllers;
 
 import javasmmr.zoowsome.models.animals.*;
 import javasmmr.zoowsome.models.employees.Caretaker;
+import javasmmr.zoowsome.models.employees.Employees;
+import javasmmr.zoowsome.repositories.AnimalRepository;
+import javasmmr.zoowsome.repositories.EmployeesRepository;
 import javasmmr.zoowsome.services.factories.AnimalsFactory.AnimalFactory;
 import javasmmr.zoowsome.services.factories.Constants;
 import javasmmr.zoowsome.services.factories.AnimalsFactory.SpeciesFactory;
@@ -172,87 +175,138 @@ public class MainController {
 
         // Zoo (part 2) - 4.1
 
-        List<Animals> animals = new ArrayList<>();
-        animals.add(new Tiger());
-        animals.add(new Parrot());
-        animals.add(new Snake());
-        animals.add(new Crocodile());
-        animals.add(new Butterfly());
-
-        List<Caretaker> caretakers = new ArrayList<>();
-        caretakers.add(new Caretaker("John", new BigDecimal("3000"), 8.0));
-        caretakers.add(new Caretaker("Alice", new BigDecimal("3200"), 6.5));
-        caretakers.add(new Caretaker("Bob", new BigDecimal("2900"), 7.0));
-
-        for (Caretaker caretaker : caretakers) {
-            for (Animals animal : animals) {
-                if (!caretaker.isDead() && !animal.isTakenCareOf()) {
-                    String result = caretaker.takeCareOf(animal);
-                    if (result.equals(Constants.Employees.Caretakers.TCO_KILLED)) {
-                        caretaker.setDead(true);
-                        System.out.println(caretaker.getName() + " was killed by " + animal.getClass().getSimpleName());
-                        break;
-                    } else if (result.equals(Constants.Employees.Caretakers.TCO_NO_TIME)) {
-                        System.out.println(caretaker.getName() + " did not have enough time to take care of " + animal.getClass().getSimpleName());
-                        continue;
-                    } else {
-                        animal.setTakenCareOf(true);
-                        System.out.println(caretaker.getName() + " successfully took care of " + animal.getClass().getSimpleName());
-                    }
-                }
-            }
-        }
-
-        boolean allTakenCareOf = true;
-        for (Animals animal : animals) {
-            if (!animal.isTakenCareOf()) {
-                allTakenCareOf = false;
-                System.out.println(animal.getClass().getSimpleName() + " has not been taken care of.");
-            }
-        }
-
-        if (allTakenCareOf) {
-            System.out.println("All animals have been taken care of.");
-        } else {
-            System.out.println("Not all animals have been taken care of.");
-        }
+//        List<Animals> animals = new ArrayList<>();
+//        animals.add(new Tiger());
+//        animals.add(new Parrot());
+//        animals.add(new Snake());
+//        animals.add(new Crocodile());
+//        animals.add(new Butterfly());
+//
+//        List<Caretaker> caretakers = new ArrayList<>();
+//        caretakers.add(new Caretaker("John", new BigDecimal("3000"), 8.0));
+//        caretakers.add(new Caretaker("Alice", new BigDecimal("3200"), 6.5));
+//        caretakers.add(new Caretaker("Bob", new BigDecimal("2900"), 7.0));
+//
+//        for (Caretaker caretaker : caretakers) {
+//            for (Animals animal : animals) {
+//                if (!caretaker.isDead() && !animal.isTakenCareOf()) {
+//                    String result = caretaker.takeCareOf(animal);
+//                    if (result.equals(Constants.Employees.Caretakers.TCO_KILLED)) {
+//                        caretaker.setDead(true);
+//                        System.out.println(caretaker.getName() + " was killed by " + animal.getClass().getSimpleName());
+//                        break;
+//                    } else if (result.equals(Constants.Employees.Caretakers.TCO_NO_TIME)) {
+//                        System.out.println(caretaker.getName() + " did not have enough time to take care of " + animal.getClass().getSimpleName());
+//                        continue;
+//                    } else {
+//                        animal.setTakenCareOf(true);
+//                        System.out.println(caretaker.getName() + " successfully took care of " + animal.getClass().getSimpleName());
+//                    }
+//                }
+//            }
+//        }
+//
+//        boolean allTakenCareOf = true;
+//        for (Animals animal : animals) {
+//            if (!animal.isTakenCareOf()) {
+//                allTakenCareOf = false;
+//                System.out.println(animal.getClass().getSimpleName() + " has not been taken care of.");
+//            }
+//        }
+//
+//        if (allTakenCareOf) {
+//            System.out.println("All animals have been taken care of.");
+//        } else {
+//            System.out.println("Not all animals have been taken care of.");
+//        }
 
         // Chapter 4 - 4.2
 
-        System.out.println("\nAnd now for the twist!!!");
+//        System.out.println("\nAnd now for the twist!!!");
+//
+//        Animals spider = new Spider();
+//
+//        if (spider.kill()) {
+//            System.out.println("The spider killed the caretaker.");
+//        } else {
+//            System.out.println("The spider did not kill the caretaker.");
+//        }
+//
+//        Animals tiger = new Tiger();
+//
+//        if (tiger.kill()) {
+//            System.out.println("The tiger killed the caretaker.");
+//        } else {
+//            System.out.println("The tiger did not kill the caretaker.");
+//        }
+//
+//        Animals snake = new Snake();
+//
+//        if (snake.kill()) {
+//            System.out.println("The snake killed the caretaker.");
+//        } else {
+//            System.out.println("The snake did not kill the caretaker.");
+//        }
+//
+//        Animals crocodile = new Crocodile();
+//
+//        if (crocodile.kill()) {
+//            System.out.println("The crocodile killed the caretaker.");
+//        } else {
+//            System.out.println("The crocodile did not kill the caretaker.");
+//        }
 
-        Animals spider = new Spider();
+        // Chapter 5
 
-        if (spider.kill()) {
-            System.out.println("The spider killed the caretaker.");
-        } else {
-            System.out.println("The spider did not kill the caretaker.");
-        }
+        AnimalRepository animalRepo = new AnimalRepository();
 
-        Animals tiger = new Tiger();
-
-        if (tiger.kill()) {
-            System.out.println("The tiger killed the caretaker.");
-        } else {
-            System.out.println("The tiger did not kill the caretaker.");
-        }
-
-        Animals snake = new Snake();
-
-        if (snake.kill()) {
-            System.out.println("The snake killed the caretaker.");
-        } else {
-            System.out.println("The snake did not kill the caretaker.");
-        }
-
+        Animals butterfly = new Butterfly();
         Animals crocodile = new Crocodile();
 
-        if (crocodile.kill()) {
-            System.out.println("The crocodile killed the caretaker.");
-        } else {
-            System.out.println("The crocodile did not kill the caretaker.");
+        ArrayList<Animals> animals = new ArrayList<>();
+        animals.add(butterfly);
+        animals.add(crocodile);
+
+        try {
+            animalRepo.save(animals);
+
+            System.out.println("Animals have been saved to Animals.xml.");
+
+            List<Animals> loadedAnimals = animalRepo.load();
+
+            System.out.println("Animals loaded from XML:");
+            for (Animals animal : loadedAnimals) {
+                System.out.println(animal.getName() + " - " + animal.getClass().getSimpleName());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
+        EmployeesRepository employeeRepo = new EmployeesRepository();
+
+        Employees caretaker1 = new Caretaker();
+        Employees caretaker2 = new Caretaker();
+
+        ArrayList<Employees> employees = new ArrayList<>();
+        employees.add(caretaker1);
+        employees.add(caretaker2);
+
+        try {
+            employeeRepo.save(employees);
+
+            System.out.println("Employees have been saved to Employees.xml.");
+
+            List<Employees> loadedEmployees = employeeRepo.load();
+
+            System.out.println("Employees loaded from XML:");
+            for (Employees employee : loadedEmployees) {
+                System.out.println(employee.getName() + " - " + employee.getClass().getSimpleName());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

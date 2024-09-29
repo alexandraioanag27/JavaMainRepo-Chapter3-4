@@ -1,6 +1,12 @@
 package javasmmr.zoowsome.models.animals;
 
+import javasmmr.zoowsome.services.factories.Constants;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
 import static javasmmr.zoowsome.models.animals.WaterType.*;
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
 
 public class Octopus extends Reptile{
 
@@ -20,6 +26,12 @@ public class Octopus extends Reptile{
         this.avgSwinDepth = 750;
         this.waterType = SALTWATER;
     };
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Aquatic.Octopus);
+    }
 
     public Enum getWaterType() {
         return waterType;

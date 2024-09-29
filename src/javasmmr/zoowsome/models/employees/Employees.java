@@ -1,8 +1,16 @@
 package javasmmr.zoowsome.models.employees;
 
+import static javasmmr.zoowsome.repositories.EmployeesRepository.createNode;
+
+
+import javasmmr.zoowsome.models.interfaces.XML_Parsable;
+import org.w3c.dom.Element;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
 import java.math.BigDecimal;
 
-public abstract class Employees {
+public abstract class Employees implements XML_Parsable {
     String name;
     Long id;
     BigDecimal salary;
@@ -20,6 +28,20 @@ public abstract class Employees {
         id = generateId();
         salary = BigDecimal.ZERO;
         isDead = false;
+    }
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException {
+        createNode(eventWriter, "name", String.valueOf(this.name));
+        createNode(eventWriter, "id", String.valueOf(this.id));
+        createNode(eventWriter, "salary", String.valueOf(this.salary));
+        createNode(eventWriter, "isDead", String.valueOf(this.isDead));
+    }
+
+    public void decodeFromXml( Element element) {
+        setName(element.getElementsByTagName("name").item(0).getTextContent()) ;
+        setId(Long.valueOf(element.getElementsByTagName( "id").item(0).getTextContent())) ;
+        setSalary(new BigDecimal(element.getElementsByTagName("salary").item(0).getTextContent()));
+        setDead(Boolean.valueOf(element.getElementsByTagName("isDead").item(0).getTextContent()) );
     }
 
     private Long generateId(){
@@ -51,11 +73,12 @@ public abstract class Employees {
         this.salary = salary;
     }
 
-    public boolean isDead() {
+    public boolean setIsDead() {
         return isDead;
     }
 
-    public void setDead(boolean dead) {
-        isDead = dead;
+    public void setDead(boolean isDead) {
+        this.isDead = isDead;
     }
+
 }

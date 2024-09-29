@@ -1,5 +1,12 @@
 package javasmmr.zoowsome.models.animals;
 
+import javasmmr.zoowsome.services.factories.Constants;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
+
 public class Chicken extends Bird{
 
     boolean migrates;
@@ -18,6 +25,12 @@ public class Chicken extends Bird{
         this.migrates = false;
         this.avgFlightAltitude = 0;
     };
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Bird.Chicken);
+    }
 
     public int getNumberOfLegs() {
         return numberOfLegs;

@@ -1,7 +1,13 @@
 package javasmmr.zoowsome.models.animals;
 
+import javasmmr.zoowsome.services.factories.Constants;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
 import java.time.LocalDate;
 import java.time.Month;
+
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
 
 public class Crocodile extends Reptile{
 
@@ -29,6 +35,12 @@ public class Crocodile extends Reptile{
         } else {
             return 0;
         }
+    }
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Reptile.Crocodile);
     }
 
     public int getNumberOfLegs() {

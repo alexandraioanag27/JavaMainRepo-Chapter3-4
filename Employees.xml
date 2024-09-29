@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><content>
+<EMPLOYEE>
+	<name>Caretaker</name>
+	<id>85707769606</id>
+	<salary>0</salary>
+	<isDead>false</isDead>
+	<workingHours>null</workingHours>
+	<DISCRIMINANT>CARETAKER</DISCRIMINANT>
+</EMPLOYEE>
+<EMPLOYEE>
+	<name>Caretaker</name>
+	<id>735583326224</id>
+	<salary>0</salary>
+	<isDead>false</isDead>
+	<workingHours>null</workingHours>
+	<DISCRIMINANT>CARETAKER</DISCRIMINANT>
+</EMPLOYEE>
+</content>

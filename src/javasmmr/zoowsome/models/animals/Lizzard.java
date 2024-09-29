@@ -1,5 +1,12 @@
 package javasmmr.zoowsome.models.animals;
 
+import javasmmr.zoowsome.services.factories.Constants;
+
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.XMLStreamException;
+
+import static javasmmr.zoowsome.repositories.AnimalRepository.createNode;
+
 public class Lizzard extends Reptile{
 
     boolean laysEggs;
@@ -15,6 +22,12 @@ public class Lizzard extends Reptile{
         this.name = "Lizard";
         this.laysEggs = true;
     };
+
+    public void encodeToXml(XMLEventWriter eventWriter) throws XMLStreamException
+    {
+        super.encodeToXml(eventWriter);
+        createNode(eventWriter, Constants.XML_TAGS.DISCRIMINANT, Constants.Animals.Reptile.Lizzard);
+    }
 
     public int getNumberOfLegs() {
         return numberOfLegs;
